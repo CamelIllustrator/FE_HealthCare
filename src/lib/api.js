@@ -13,6 +13,7 @@ export const login = async (credentials) => {
       import.meta.env.VITE_API_LOGIN,
       credentials
     );
+    localStorage.setItem('accessToken', response.data.data.accessToken);
     return response.data;
   } catch (error) {
     throw error.response?.data;
@@ -46,3 +47,13 @@ export const registerInstitution = async (userData) => {
 };
 
 export default api;
+
+export const decodeJwt = async () => {
+  const accessToken = localStorage.getItem('accessToken');
+  const response = await api.post('/auth/jwt/decode', {}, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return response.data.data
+}
