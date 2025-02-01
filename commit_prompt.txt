@@ -1,0 +1,3 @@
+(*) = update // (*)resolve some bug
+(+) = add // (+)add feature animation
+(-) = remove // (-)remove function handler
