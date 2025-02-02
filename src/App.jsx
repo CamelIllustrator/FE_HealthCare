@@ -8,6 +8,7 @@ import SignUpInstitution from "./pages/Auth/SignUpInstitution";
 import { LandingPage } from "./pages/Landing Page/LandingPage";
 import Header from './components/organisms/Header';
 import Footer from "./components/organisms/Footer";
+import { ParentHomePage } from "./pages/HomePage/Parent/ParentHomePage";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
@@ -21,7 +22,7 @@ function App() {
         <Routes>
           <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/dashboard" element={<HomeLayout />}>
-            <Route path="" element={<h1>Test</h1>} />
+            <Route path="" element={<ParentHomePage />} />
             <Route path="parent" element={<h1>Test2</h1>} />
           </Route>
           <Route path="/auth" element={<AuthLayout />}>

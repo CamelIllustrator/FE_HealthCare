@@ -27,7 +27,7 @@ const FormInputSignIn = () => {
           render(response) {
             return response.data.message;
           },
-          onClose: () => navigate("../.."),
+          onClose: () => navigate("/dashboard"),
         },
         error: {
           render(response) {

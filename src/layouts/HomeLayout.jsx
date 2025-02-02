@@ -39,7 +39,7 @@ const HomeLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar items={items} />
-      <article>
+      <article className="px-4 w-full bg-slate-100">
         <SidebarTrigger />
         <Outlet />
       </article>
