@@ -27,7 +27,7 @@ export const ParentHomePage = () => {
             progress: 100,
             totalAnswered: 10,
             totalQuestion: 10,
-            url: ''
+            url: 'parent/profile'
         },
         {
             title: 'Data Nutrisi',
