@@ -4,3 +4,7 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
+
+export const getInitials = (name) => {
+  name.split(" ").map(n => n[0]).join("");
+}

@@ -11,10 +11,10 @@ const Layout = () => {
   return (
     <div className="flex flex-col justify-between min-h-screen">
       <div>
-        {!hideHeaderFooter && <Header />}
+        {/* {!hideHeaderFooter && <Header />} */}
         <App />
       </div>
-      {!hideHeaderFooter && <Footer />}
+      {/* {!hideHeaderFooter && <Footer />} */}
     </div>
   );
 };
