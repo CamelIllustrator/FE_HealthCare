@@ -17,9 +17,6 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-
-
-
 export const ParentHomePage = () => {
     const progressItems = [
         {
@@ -30,18 +27,11 @@ export const ParentHomePage = () => {
             url: 'parent/profile/create'
         },
         {
-            title: 'Data Nutrisi',
+            title: 'Data Keluarga',
             progress: 100,
             totalAnswered: 10,
             totalQuestion: 10,
-            url: ''
-        },
-        {
-            title: 'Struktur Keluarga',
-            progress: 100,
-            totalAnswered: 10,
-            totalQuestion: 10,
-            url: ''
+            url: 'parent/family/create'
         },
         {
             title: 'Quisioner Gizi',
