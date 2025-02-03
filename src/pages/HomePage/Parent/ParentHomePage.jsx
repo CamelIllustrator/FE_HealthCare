@@ -17,31 +17,22 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-
-
-
 export const ParentHomePage = () => {
+
     const progressItems = [
         {
             title: 'Data Diri',
             progress: 100,
             totalAnswered: 10,
             totalQuestion: 10,
-            url: 'parent/profile'
+            url: 'parent/profile/create'
         },
         {
-            title: 'Data Nutrisi',
+            title: 'Data Keluarga',
             progress: 100,
             totalAnswered: 10,
             totalQuestion: 10,
-            url: ''
-        },
-        {
-            title: 'Struktur Keluarga',
-            progress: 100,
-            totalAnswered: 10,
-            totalQuestion: 10,
-            url: ''
+            url: 'parent/family/create'
         },
         {
             title: 'Quisioner Gizi',
@@ -129,7 +120,7 @@ export const ParentHomePage = () => {
                     </div>
                 </div>
                 <div className="w-full bg-white mt-6 rounded-xl p-4">
-                    <h1>Table</h1>
+                    <h1>Tabel Keluarga</h1>
                     <Table>
                         <TableCaption>Informasi Keluarga</TableCaption>
                         <TableHeader>

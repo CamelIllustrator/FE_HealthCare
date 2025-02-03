@@ -17,7 +17,7 @@ const DashboardProgress = ({ progressItems }) => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <h1 className="font-semibold">Average Progress</h1>
-                            <p className="text-slate-500">{totalCompleted}/6 Completed</p>
+                            <p className="text-slate-500">{totalCompleted}/{progressItems.length} Completed</p>
                         </div>
                     </div>
                     <div className="mt-5">

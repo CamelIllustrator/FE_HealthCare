@@ -10,6 +10,8 @@ import Header from './components/organisms/Header';
 import Footer from "./components/organisms/Footer";
 import { ParentHomePage } from "./pages/HomePage/Parent/ParentHomePage";
 import FillSelfProfilePage from "./pages/ProfilePage/FillSelfProfilePage";
+import ProfileFormPage from "./pages/ProfilePage/ProfileFormPage";
+import FamilyFormPage from "./pages/ProfilePage/FamilyFormPage";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
@@ -26,6 +28,8 @@ function App() {
             <Route path="" element={<ParentHomePage />} />
             <Route path="parent" element={<h1>Test2</h1>} />
             <Route path="parent/profile" element={<FillSelfProfilePage />} />
+            <Route path="parent/profile/create" element={<ProfileFormPage />} />
+            <Route path="parent/family/create" element={<FamilyFormPage />} />
           </Route>
           <Route path="/auth" element={<AuthLayout />}>
             <Route path="login" element={<SignIn />} />
