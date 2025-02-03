@@ -56,7 +56,7 @@ const ProfileFormPage = () => {
         }))
     }
 
-    console.log({ birthDate })
+    console.log({ formInput })
 
     return (
         <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={setBirthDate} />

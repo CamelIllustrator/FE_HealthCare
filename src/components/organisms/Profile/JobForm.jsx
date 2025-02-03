@@ -15,7 +15,12 @@ const JobForm = ({ jobTypeId, income, onInputChange = () => { } }) => {
             <h1 className="mb-4 font-semibold text-2xl text-slate-600">Data Pekerjaan</h1>
             <div className="flex flex-col gap-2">
                 <Label>Pekerjaan</Label>
-                <Select onValueChange={value => onInputChange('jobTypeId', value, 'job')} value={jobTypeId}>
+                <Select onValueChange={value => {
+                    if (value === 1) {
+                        onInputChange('income', 0, 'job');
+                    }
+                    onInputChange('jobTypeId', +value, 'job')
+                }} value={jobTypeId}>
                     <SelectTrigger className="w-2/3">
                         <SelectValue placeholder="Pekerjaan" />
                     </SelectTrigger>
@@ -29,9 +34,9 @@ const JobForm = ({ jobTypeId, income, onInputChange = () => { } }) => {
                     </SelectContent>
                 </Select>
             </div>
-
-            <FormInputText name={"income"} onChange={({ target }) => onInputChange(target.name, +target.value, 'job')} title={"Gaji"} value={income} placeholder={"Masukkan gaji anda"} />
-            <p className="text-slate-400 font-semibold px-2"><super>*</super> isi 0 jika tidak bekerja</p>
+            {jobTypeId !== 1 && (
+                <FormInputText name={"income"} onChange={({ target }) => onInputChange(target.name, +target.value, 'job')} title={"Gaji"} value={income} placeholder={"Masukkan gaji anda"} />
+            )}
 
         </div>
     )
