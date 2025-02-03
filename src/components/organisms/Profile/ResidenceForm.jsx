@@ -11,13 +11,13 @@ import {
 import FormInputText from '@/components/molecules/Input/FormInput'
 
 
-const ResidenceForm = ({ residenceStatus = "", setResidenceStatus = () => { } }) => {
+const ResidenceForm = ({ residenceStatus = "", address = "", description = "", onInputChange }) => {
     return (
         <div className="flex flex-col p-4 border rounded-xl mt-4 gap-4">
             <h1 className="mb-4 font-semibold text-2xl text-slate-600">Data Tempat Tinggal</h1>
             <div className="flex flex-col gap-2">
                 <Label>Status Tempat Tinggal</Label>
-                <Select onValueChange={status => setResidenceStatus(status)}>
+                <Select onValueChange={status => onInputChange('status', status, 'residence')}>
                     <SelectTrigger className="w-2/3">
                         <SelectValue placeholder="Status tempat tinggal" />
                     </SelectTrigger>
@@ -28,11 +28,10 @@ const ResidenceForm = ({ residenceStatus = "", setResidenceStatus = () => { } })
                     </SelectContent>
                 </Select>
                 {residenceStatus === "OTHER" && (
-                    <Input type="text" placeholder="Status tempat tinggal" className="w-2/3" />
+                    <Input type="text" placeholder="Status tempat tinggal" className="w-2/3" value={description} onChange={({ target }) => onInputChange(target.name, target.value, 'residence')} name="description" />
                 )}
-
             </div>
-            <FormInputText name={"address"} onChange={() => { }} title={"Alamat"} value={null} placeholder={"Masukkan alamat anda"} type='textarea' />
+            <FormInputText name={"address"} onChange={({ target }) => onInputChange(target.name, target.value, 'residence')} title={"Alamat"} value={address} placeholder={"Masukkan alamat anda"} type='textarea' />
         </div>
     )
 }

@@ -11,19 +11,19 @@ import {
 import FormInputText from '@/components/molecules/Input/FormInput'
 
 
-const SelfInformationForm = ({ date, setDate, residenceStatus, setResidenceStatus }) => {
+const SelfInformationForm = ({ date, setDate, education, gender, relation, fullName, onInputChange }) => {
     return (
         <div className="flex flex-col p-4 border rounded-xl">
             <h1 className="mt-6 mb-4 font-semibold text-2xl text-slate-600 ">Data Diri</h1>
             <div className="flex flex-col gap-8">
-                <FormInputText name={"fullName"} onChange={() => { }} title={"Nama Lengkap"} value={null} placeholder={"Masukkan nama lengkap anda"} />
+                <FormInputText name={"fullName"} onChange={({ target }) => onInputChange(target.name, target.value, 'profile')} title={"Nama Lengkap"} value={fullName} placeholder={"Masukkan nama lengkap anda"} type='text' />
                 <div className="flex flex-col gap-2">
                     <Label>Tanggal Lahir</Label>
                     <DatePickerInput date={date} setDate={setDate} />
                 </div>
                 <div className="flex flex-col gap-2">
                     <Label>Pendidikan</Label>
-                    <Select>
+                    <Select onValueChange={education => onInputChange('education', education, 'profile')} value={education}>
                         <SelectTrigger className="w-2/3">
                             <SelectValue placeholder="Pendidikan" />
                         </SelectTrigger>
@@ -39,7 +39,7 @@ const SelfInformationForm = ({ date, setDate, residenceStatus, setResidenceStatu
                 </div>
                 <div className="flex flex-col gap-2">
                     <Label>Jenis Kelamin</Label>
-                    <Select>
+                    <Select onValueChange={(value) => onInputChange('gender', value, 'profile')} value={gender}>
                         <SelectTrigger className="w-2/3">
                             <SelectValue placeholder="Jenis Kelamin" />
                         </SelectTrigger>
@@ -51,7 +51,7 @@ const SelfInformationForm = ({ date, setDate, residenceStatus, setResidenceStatu
                 </div>
                 <div className="flex flex-col gap-2">
                     <Label>Hubungan</Label>
-                    <Select>
+                    <Select onValueChange={(value) => onInputChange('relation', value, 'profile')} value={relation}>
                         <SelectTrigger className="w-2/3">
                             <SelectValue placeholder="Hubungan" />
                         </SelectTrigger>

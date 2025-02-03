@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table"
 
 export const ParentHomePage = () => {
+
     const progressItems = [
         {
             title: 'Data Diri',

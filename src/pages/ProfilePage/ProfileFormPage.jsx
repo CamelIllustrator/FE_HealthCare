@@ -1,19 +1,65 @@
 import { useState } from 'react'
-import JobForm from '@/components/organisms/Profile/JobForm'
-import SelfInformationForm from '@/components/organisms/Profile/SelfInformationForm'
 
-import NutritionForm from '@/components/organisms/Profile/NutritionForm'
-import ResidenceForm from '@/components/organisms/Profile/ResidenceForm'
 import ProfileFormTemplate from '@/components/templates/ProfileFormTemplate'
-
-
-
 const ProfileFormPage = () => {
-    const [date, setDate] = useState(new Date());
-    const [residenceStatus, setResidenceStatus] = useState(null);
+    const [birthDate, setBirthDate] = useState(null);
+    const [formInput, setFormInput] = useState({
+        profile: {
+            fullName: '',
+            education: '',
+            gender: '',
+            relation: '',
+        },
+        job: {
+            income: 0,
+            jobTypeId: 1
+        },
+        residence: {
+            status: '',
+            address: '',
+            description: ''
+        },
+
+        institutionId: 0,
+        nutrition: {
+            height: 0,
+            weight: 0,
+            birth_weight: 0,
+        },
+        behaviour: {
+            eatFrequency: 0,
+            drinkFrequency: 0,
+            physicalActivity: 0,
+            sleepQuality: 0,
+            phbs: 0
+        },
+        knowledgeNutrition: {
+            knowledge: '',
+            score: 0
+        }
+    });
+
+    const onInputChange = (key, value, parentKey = null) => {
+        if (parentKey) {
+            setFormInput(prevValue => ({
+                ...prevValue,
+                [parentKey]: {
+                    ...prevValue[parentKey],
+                    [key]: value
+                }
+            }))
+        }
+
+        setFormInput(prevValue => ({
+            ...prevValue,
+            [key]: value
+        }))
+    }
+
+    console.log({ birthDate })
 
     return (
-        <ProfileFormTemplate date={date} setDate={setDate} residenceStatus={residenceStatus} setResidenceStatus={setResidenceStatus} />
+        <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={setBirthDate} />
     )
 }
 
