@@ -1,63 +1,12 @@
-import { useState } from 'react'
 import { toast } from 'react-toastify';
+import { Button } from '@/components/ui/button';
 
 import ProfileFormTemplate from '@/components/templates/ProfileFormTemplate'
 import { useNavigate } from 'react-router-dom';
-const ProfileFormPage = () => {
-    const [birthDate, setBirthDate] = useState(JSON.parse(localStorage.getItem('formInput'))?.birthDate || null);
-    const [formInput, setFormInput] = useState(JSON.parse(localStorage.getItem('formInput')) ?? {
-        profile: {
-            fullName: '',
-            education: '',
-            gender: '',
-            relation: '',
-        },
-        job: {
-            income: 0,
-            jobTypeId: 1
-        },
-        residence: {
-            status: '',
-            address: '',
-            description: ''
-        },
-
-        institutionId: 0,
-        nutrition: {
-            height: 0,
-            weight: 0,
-            birth_weight: 0,
-        },
-        behaviour: {
-            eatFrequency: 0,
-            drinkFrequency: 0,
-            physicalActivity: 0,
-            sleepQuality: 0,
-            phbs: 0
-        },
-        knowledgeNutrition: {
-            knowledge: '',
-            score: 0
-        }
-    });
-
-
-    const onInputChange = (key, value, parentKey = null) => {
-        if (parentKey) {
-            setFormInput(prevValue => ({
-                ...prevValue,
-                [parentKey]: {
-                    ...prevValue[parentKey],
-                    [key]: value
-                }
-            }))
-        }
-
-        setFormInput(prevValue => ({
-            ...prevValue,
-            [key]: value
-        }))
-    }
+import { useFamilyFormStore } from '@/store/form/FamilyFormStore';
+const ProfileFormPage = ({ children }) => {
+    // const [birthDate, setBirthDate] = useState(JSON.parse(localStorage.getItem('formInput'))?.birthDate || null);
+    const { formInput, onInputChange, selfBirthDate: birthDate, setSelfBirthDate: setBirthDate } = useFamilyFormStore()
     const navigate = useNavigate();
 
     const onSubmitProfileForm = (e, type = "PARENT") => {
@@ -72,7 +21,7 @@ const ProfileFormPage = () => {
     const handleSubmitParentForm = (type = "PARENT") => {
         const test = { ...formInput, birthDate };
         localStorage.setItem('formInput', JSON.stringify(test));
-        toast.success(`Form ${type} berhasil disimpan`, {
+        toast.success(`Data berhasil disimpan`, {
             autoClose: 1500,
             onClose: () => {
                 navigate('/dashboard')
@@ -81,7 +30,9 @@ const ProfileFormPage = () => {
     }
 
     return (
-        <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={setBirthDate} onSubmit={onSubmitProfileForm} formFor='PARENT' birthWeight={formInput.nutrition.birth_weight} />
+        <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={setBirthDate} onSubmit={onSubmitProfileForm} formFor='PARENT' birthWeight={formInput.nutrition.birth_weight}>
+            {children}
+        </ProfileFormTemplate>
     )
 }
 

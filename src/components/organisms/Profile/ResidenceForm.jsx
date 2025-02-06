@@ -17,7 +17,7 @@ const ResidenceForm = ({ residenceStatus = "", address = "", description = "", o
             <h1 className="mb-4 font-semibold text-2xl text-slate-600">Data Tempat Tinggal</h1>
             <div className="flex flex-col gap-2">
                 <Label>Status Tempat Tinggal</Label>
-                <Select onValueChange={status => onInputChange('status', status, 'residence')}>
+                <Select onValueChange={status => onInputChange('status', status, 'residence')} value={residenceStatus}>
                     <SelectTrigger className="w-2/3">
                         <SelectValue placeholder="Status tempat tinggal" />
                     </SelectTrigger>
