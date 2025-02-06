@@ -1,24 +1,44 @@
 import DashboardProrgess from '@/components/organisms/Progress/DashboardProrgess';
-import React, { useState, useMemo } from 'react';
-import { Calendar } from "@/components/ui/calendar"
+import BasicTable from '@/components/organisms/Table/BasicTable';
+import { Calendar } from "@/components/ui/calendar";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/components/ui/tooltip"
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/tooltip";
+import { useState } from 'react';
 
 export const ParentHomePage = () => {
-
+    const [familyMembers, setFamilyMembers] = useState([
+        {
+            name: 'Ripan Renaldi',
+            relation: 'Ayah',
+            job: 'Developer',
+            height: 165,
+            weight: 55,
+            birthWeight: 3,
+            nutritionStatus: 'Normal'
+        },
+        {
+            name: 'Ripan Renaldi',
+            relation: 'Ayah',
+            job: 'Developer',
+            height: 165,
+            weight: 55,
+            birthWeight: 3,
+            nutritionStatus: 'Normal'
+        },
+        {
+            name: 'Ripan Renaldi',
+            relation: 'Ayah',
+            job: 'Developer',
+            height: 165,
+            weight: 55,
+            birthWeight: 3,
+            nutritionStatus: 'Normal'
+        }
+    ]);
     const progressItems = [
         {
             title: 'Data Diri',
@@ -79,10 +99,17 @@ export const ParentHomePage = () => {
         }
     };
 
-    const handleMonthChange = (test) => {
-        setTooltipText(null);
+    const format = {
+        headers: [
+            { name: "Nama" },
+            { name: "Relasi" },
+            { name: "Pekerjaan" },
+            { name: "Tinggi Badan (cm)" },
+            { name: "Berat Badan (kg)" },
+            { name: "Berat Badan Lahir (kg)" },
+            { name: "Status Gizi" },
+        ],
     }
-
 
     return (
         <article className="w-full">
@@ -119,62 +146,7 @@ export const ParentHomePage = () => {
                         </TooltipProvider>
                     </div>
                 </div>
-                <div className="w-full bg-white mt-6 rounded-xl p-4">
-                    <h1>Tabel Keluarga</h1>
-                    <Table>
-                        <TableCaption>Informasi Keluarga</TableCaption>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-[100px]">Nama</TableHead>
-                                <TableHead className="w-[100px]">Relasi</TableHead>
-                                <TableHead>Pekerjaan</TableHead>
-                                <TableHead>Tinggi Badan (cm)</TableHead>
-                                <TableHead>Berat Badan (kg)</TableHead>
-                                <TableHead>Berat Badan Lahir (kg)</TableHead>
-                                <TableHead>Status Gizi</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell className="font-medium">Ripan Renaldi</TableCell>
-                                <TableCell>Ayah</TableCell>
-                                <TableCell>Developer</TableCell>
-                                <TableCell>165</TableCell>
-                                <TableCell>55</TableCell>
-                                <TableCell>3</TableCell>
-                                <TableCell>Normal</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className="font-medium">Ripan Renaldi</TableCell>
-                                <TableCell>Ayah</TableCell>
-                                <TableCell>Developer</TableCell>
-                                <TableCell>165</TableCell>
-                                <TableCell>55</TableCell>
-                                <TableCell>3</TableCell>
-                                <TableCell>Normal</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className="font-medium">Ripan Renaldi</TableCell>
-                                <TableCell>Ayah</TableCell>
-                                <TableCell>Developer</TableCell>
-                                <TableCell>165</TableCell>
-                                <TableCell>55</TableCell>
-                                <TableCell>3</TableCell>
-                                <TableCell>Normal</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className="font-medium">Ripan Renaldi</TableCell>
-                                <TableCell>Ayah</TableCell>
-                                <TableCell>Developer</TableCell>
-                                <TableCell>165</TableCell>
-                                <TableCell>55</TableCell>
-                                <TableCell>3</TableCell>
-                                <TableCell>Normal</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-
-                </div>
+                <BasicTable caption={'Informasi Keluarga'} data={familyMembers.length > 0 ? familyMembers : []} format={format} title={'Tabel Keluarga'} />
             </section>
         </article>
     )

@@ -24,12 +24,12 @@ const ResidenceForm = ({ residenceStatus = "", address = "", description = "", o
                     <SelectContent>
                         <SelectItem value="OWN">Milik Sendiri</SelectItem>
                         <SelectItem value="RENT">Sewa / Kontrak</SelectItem>
-                        <SelectItem value="OTHER">LAINNYA</SelectItem>
+                        <SelectItem value="OTHER">Bersama orang tua / numpang</SelectItem>
                     </SelectContent>
                 </Select>
-                {residenceStatus === "OTHER" && (
+                {/* {residenceStatus === "OTHER" && (
                     <Input type="text" placeholder="Status tempat tinggal" className="w-2/3" value={description} onChange={({ target }) => onInputChange(target.name, target.value, 'residence')} name="description" />
-                )}
+                )} */}
             </div>
             <FormInputText name={"address"} onChange={({ target }) => onInputChange(target.name, target.value, 'residence')} title={"Alamat"} value={address} placeholder={"Masukkan alamat anda"} type='textarea' />
         </div>

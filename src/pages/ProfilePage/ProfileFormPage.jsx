@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify';
 
 import ProfileFormTemplate from '@/components/templates/ProfileFormTemplate'
+import { useNavigate } from 'react-router-dom';
 const ProfileFormPage = () => {
-    const [birthDate, setBirthDate] = useState(null);
-    const [formInput, setFormInput] = useState({
+    const [birthDate, setBirthDate] = useState(JSON.parse(localStorage.getItem('formInput'))?.birthDate || null);
+    const [formInput, setFormInput] = useState(JSON.parse(localStorage.getItem('formInput')) ?? {
         profile: {
             fullName: '',
             education: '',
@@ -39,6 +41,7 @@ const ProfileFormPage = () => {
         }
     });
 
+
     const onInputChange = (key, value, parentKey = null) => {
         if (parentKey) {
             setFormInput(prevValue => ({
@@ -55,11 +58,30 @@ const ProfileFormPage = () => {
             [key]: value
         }))
     }
+    const navigate = useNavigate();
 
-    console.log({ formInput })
+    const onSubmitProfileForm = (e, type = "PARENT") => {
+        e.preventDefault();
+        if (type === "PARENT") {
+            handleSubmitParentForm(type);
+        } else {
+            handleSubmitInstitutionForm(type);
+        }
+    }
+
+    const handleSubmitParentForm = (type = "PARENT") => {
+        const test = { ...formInput, birthDate };
+        localStorage.setItem('formInput', JSON.stringify(test));
+        toast.success(`Form ${type} berhasil disimpan`, {
+            autoClose: 1500,
+            onClose: () => {
+                navigate('/dashboard')
+            }
+        })
+    }
 
     return (
-        <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={setBirthDate} />
+        <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={setBirthDate} onSubmit={onSubmitProfileForm} formFor='PARENT' birthWeight={formInput.nutrition.birth_weight} />
     )
 }
 
