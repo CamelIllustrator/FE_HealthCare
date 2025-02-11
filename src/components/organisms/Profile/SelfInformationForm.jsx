@@ -11,15 +11,17 @@ import {
 import FormInputText from '@/components/molecules/Input/FormInput'
 
 
-const SelfInformationForm = ({ date, setDate, education, gender, relation, fullName, onInputChange }) => {
+const SelfInformationForm = ({ date, setDate, education, gender, relation, fullName, onInputChange, phoneNumber = "" }) => {
     return (
         <div className="flex flex-col p-4 border rounded-xl">
-            <h1 className="mt-6 mb-4 font-semibold text-2xl text-slate-600 ">Data Diri</h1>
+            <h1 className="mt-6 mb-4 font-semibold text-2xl text-slate-600 ">Biodata</h1>
             <div className="flex flex-col gap-8">
-                <FormInputText name={"fullName"} onChange={({ target }) => onInputChange(target.name, target.value, 'profile')} title={"Nama Lengkap"} value={fullName} placeholder={"Masukkan nama lengkap anda"} type='text' />
+                <FormInputText name={"fullName"} onChange={({ target }) => onInputChange(target.name, target.value, 'profile')} title={"Nama Lengkap"} value={fullName} placeholder={"Masukkan nama lengkap"} type='text' />
+
                 <div className="flex flex-col gap-2">
                     <Label>Tanggal Lahir</Label>
-                    <DatePickerInput date={date} setDate={setDate} />
+                    <input type="date" name='selfBirthDate' onChange={setDate} value={date} className="border px-2 py-2 rounded-md w-2/3" />
+                    {/* <DatePickerInput date={date} setDate={setDate} /> */}
                 </div>
                 <div className="flex flex-col gap-2">
                     <Label>Pendidikan</Label>
@@ -31,6 +33,7 @@ const SelfInformationForm = ({ date, setDate, education, gender, relation, fullN
                             <SelectItem value="sd">SD</SelectItem>
                             <SelectItem value="smp">SMP</SelectItem>
                             <SelectItem value="sma">SMA</SelectItem>
+                            <SelectItem value="d3">D3</SelectItem>
                             <SelectItem value="s1">S1</SelectItem>
                             <SelectItem value="s2">S2</SelectItem>
                             <SelectItem value="s3">S3</SelectItem>
@@ -62,6 +65,9 @@ const SelfInformationForm = ({ date, setDate, education, gender, relation, fullN
                         </SelectContent>
                     </Select>
                 </div>
+                {relation !== 'ANAK' && (
+                    <FormInputText name={"phoneNumber"} onChange={({ target }) => onInputChange(target.name, target.value, 'profile')} title={"Nomor Telepon"} value={phoneNumber} placeholder={"Masukkan Nomor Telepon"} type='text' />
+                )}
 
             </div>
         </div>

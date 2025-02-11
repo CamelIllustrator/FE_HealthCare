@@ -18,27 +18,30 @@ const BasicTable = ({ title, caption, format, data }) => {
                 <TableHeader>
                     <TableRow>
                         {format.headers.map((header, index) => (
-                            <TableHead key={index}>{header.name}</TableHead>
+                            <TableHead key={index}>{header.alias}</TableHead>
                         ))}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data.length ? data.map((row, index) => (
-                        <TableRow key={index}>
-                            <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.relation}</TableCell>
-                            <TableCell>{row.job}</TableCell>
-                            <TableCell>{row.height}</TableCell>
-                            <TableCell>{row.weight}</TableCell>
-                            <TableCell>{row.birthWeight}</TableCell>
-                            <TableCell>{row.nutritionStatus}</TableCell>
-                        </TableRow>
+                    {
+                        data.length ? data.map((row, index) => (
+                            <TableRow key={index}>
+                                <TableCell>{row.full_name}</TableCell>
+                                <TableCell>{row.relation}</TableCell>
+                                <TableCell>{row.job.job_type.name}</TableCell>
 
-                    )) : (
-                        <TableRow>
-                            <TableCell colSpan={format.headers.length ?? 5} className="text-center mt-8 font-semibold ">Tidak Ada Data, Isi data keluarga terlebih dahulu</TableCell>
-                        </TableRow>
-                    )}
+                                <TableCell>{row.nutrition[0].height}</TableCell>
+                                <TableCell>{row.nutrition[0].weight}</TableCell>
+                                <TableCell>{row.nutrition[0].birth_weight ?? "Tidak ada data"}</TableCell>
+                                <TableCell>{row.nutrition[0].nutrition_status.status}</TableCell>
+                            </TableRow>
+
+                        ))
+                            : (
+                                <TableRow>
+                                    <TableCell colSpan={format.headers.length ?? 5} className="text-center mt-8 font-semibold ">Tidak Ada Data, Isi data keluarga terlebih dahulu</TableCell>
+                                </TableRow>
+                            )}
                 </TableBody>
             </Table>
 

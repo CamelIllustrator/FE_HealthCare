@@ -97,14 +97,15 @@ export const useFamilyFormStore = create(set => ({
             }))
         }
     },
-    selfBirthDate: JSON.parse(localStorage.getItem('formInput'))?.birthDate || null,
-    setSelfBirthDate: (value) => set({ selfBirthDate: value }),
-    fatherBirthDate: JSON.parse(localStorage.getItem('fatherFormInput'))?.birthDate || null,
-    setFatherBirthDate: (value) => set({ fatherBirthDate: value }),
+    selfBirthDate: JSON.parse(localStorage.getItem('formInput'))?.selfBirthDate || null,
+    onBirthDateChange: ({ target }) => set({ [target.name]: target.value }),
+    fatherBirthDate: JSON.parse(localStorage.getItem('fatherFormInput'))?.selfBirthDate || null,
+    setFatherBirthDate: ({ target: { value } }) => set({ fatherBirthDate: value }),
     addChildren: (data) => set(state => ({
         childrenFormInput: [...state.childrenFormInput, data]
     })),
     onChildrenInputForm: (key, value, parentKey = null, index) => {
+        console.log({ key, value })
         if (parentKey) {
             set(state => ({
                 childrenFormInput: state.childrenFormInput.map((children, i) => {

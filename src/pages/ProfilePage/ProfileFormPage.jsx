@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button';
 import ProfileFormTemplate from '@/components/templates/ProfileFormTemplate'
 import { useNavigate } from 'react-router-dom';
 import { useFamilyFormStore } from '@/store/form/FamilyFormStore';
-const ProfileFormPage = ({ children }) => {
+const ProfileFormPage = ({ buttonType, children, formFor = "PARENT" }) => {
     // const [birthDate, setBirthDate] = useState(JSON.parse(localStorage.getItem('formInput'))?.birthDate || null);
-    const { formInput, onInputChange, selfBirthDate: birthDate, setSelfBirthDate: setBirthDate } = useFamilyFormStore()
+    const { formInput, onInputChange, selfBirthDate: birthDate, onBirthDateChange } = useFamilyFormStore()
     const navigate = useNavigate();
 
     const onSubmitProfileForm = (e, type = "PARENT") => {
@@ -18,9 +18,12 @@ const ProfileFormPage = ({ children }) => {
         }
     }
 
+
     const handleSubmitParentForm = (type = "PARENT") => {
-        const test = { ...formInput, birthDate };
-        localStorage.setItem('formInput', JSON.stringify(test));
+        const savedPayload = { ...formInput, selfBirthDate: birthDate };
+        console.log({ savedPayload });
+        localStorage.setItem('formInput', JSON.stringify(savedPayload));
+        localStorage.setItem('selfFormPage', true);
         toast.success(`Data berhasil disimpan`, {
             autoClose: 1500,
             onClose: () => {
@@ -30,7 +33,7 @@ const ProfileFormPage = ({ children }) => {
     }
 
     return (
-        <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={setBirthDate} onSubmit={onSubmitProfileForm} formFor='PARENT' birthWeight={formInput.nutrition.birth_weight}>
+        <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={onBirthDateChange} onSubmit={(e) => onSubmitProfileForm(e, "PARENT")} formFor={formFor} birthWeight={formInput.nutrition.birth_weight} buttonType={buttonType} phoneNumber={formInput.profile.phoneNumber}>
             {children}
         </ProfileFormTemplate>
     )

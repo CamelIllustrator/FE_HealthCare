@@ -48,16 +48,15 @@ const frameworks = [
 
 import { Label } from "@/components/ui/label"
 
-export function SchoolCombobox() {
+export function SchoolCombobox({ onInputChange, school, setSchool }) {
     const [open, setOpen] = React.useState(false)
-    const [value, setValue] = React.useState()
     const [schools, setSchools] = useState([]);
 
     useEffect(() => {
         const getAllSchools = async () => {
             const response = await axios.get('http://localhost:5000/institutions/schools', {
                 headers: {
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM4ODMxMTYwLCJleHAiOjE3Mzg4NDE5NjB9.AXMKJf2WVLPbDwqOeYCQTr8brmzFD1eGTR7Z-K4NJR8`
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
                 }
             })
             const { data } = response.data;
@@ -74,32 +73,33 @@ export function SchoolCombobox() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between"
+                    className="w-2/3 justify-between"
                 >
-                    {value || "Pilih Sekolah"}
-                    <ChevronsUpDown className="opacity-50" />
+                    {school.name || "Pilih Sekolah"}
+                    <ChevronsUpDown className="w-full opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
+            <PopoverContent className="w-full p-0">
                 <Command>
                     <CommandInput placeholder="Search framework..." className="h-9" />
                     <CommandList>
                         <CommandEmpty>Sekolah Tidak Ditemukan</CommandEmpty>
                         <CommandGroup>
-                            {schools.map((school) => (
+                            {schools.map((schoolData) => (
                                 <CommandItem
-                                    key={school.id}
-                                    value={school.name}
+                                    key={schoolData.id}
+                                    value={schoolData.name}
                                     onSelect={(currentValue) => {
-                                        setValue(currentValue === value ? "" : currentValue)
+                                        onInputChange("institutionId", schoolData.id);
+                                        setSchool(prevValue => (prevValue.id === schoolData.id ? {} : schoolData))
                                         setOpen(false)
                                     }}
                                 >
-                                    {school.name}
+                                    {schoolData.name}
                                     <Check
                                         className={cn(
                                             "ml-auto",
-                                            value === school.name ? "opacity-100" : "opacity-0"
+                                            school.name === schoolData.name ? "opacity-100" : "opacity-0"
                                         )}
                                     />
                                 </CommandItem>

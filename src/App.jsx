@@ -28,7 +28,7 @@ function App() {
             <Route path="" element={<ParentHomePage />} />
             <Route path="parent" element={<h1>Test2</h1>} />
             <Route path="parent/profile" element={<FillSelfProfilePage />} />
-            <Route path="parent/profile/create" element={<ProfileFormPage />} />
+            <Route path="parent/profile/create" element={<ProfileFormPage buttonType={"SUBMIT"} />} />
             <Route path="parent/family/create" element={<FamilyFormPage />} />
           </Route>
           <Route path="/auth" element={<AuthLayout />}>
@@ -36,6 +36,7 @@ function App() {
             <Route path="register/parent" element={<SignUpParent />} />
             <Route path="register/institution" element={<SignUpInstitution />} />
           </Route>
+          <Route path="*" element={<h1>Page Not Found</h1>} />
         </Routes>
       </main>
       {!accessToken && (

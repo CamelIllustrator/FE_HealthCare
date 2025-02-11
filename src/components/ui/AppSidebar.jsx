@@ -18,7 +18,6 @@ import { getInitials } from "@/lib/utils"
 
 
 export function AppSidebar({ items }) {
-    console.log(getInitials('Ripan Renaldi'))
     return (
         <Sidebar className="overflow-hidden">
             <SidebarHeader />
