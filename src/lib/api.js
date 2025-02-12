@@ -123,5 +123,30 @@ export const getFamilyMembersByHeadPhone = async (headPhoneNumber) => {
   } catch (err) {
     toast.error(err.response?.data.message || err.message);
   }
+}
 
+export const getRegisterStatistic = async () => {
+  try {
+    const response = await api.get('/users/statistics/register', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data
+  } catch (err) {
+    toast.error(err.response?.data.message)
+  }
+}
+
+export const getUsers = async () => {
+  try {
+    const response = await api.get('/users', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message);
+  }
 }

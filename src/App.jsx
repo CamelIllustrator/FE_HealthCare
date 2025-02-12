@@ -32,6 +32,7 @@ function App() {
             <Route path="parent/profile" element={<FillSelfProfilePage />} />
             <Route path="parent/profile/create" element={<ProfileFormPage buttonType={"SUBMIT"} />} />
             <Route path="parent/family/create" element={<FamilyFormPage />} />
+            <Route path="admin" element={<QuisionerPage />} />
             <Route path="admin/quisioner" element={<QuisionerPage />} />
           </Route>
           <Route path="/auth" element={<AuthLayout />}>
