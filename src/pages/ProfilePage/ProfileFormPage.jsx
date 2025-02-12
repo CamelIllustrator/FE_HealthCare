@@ -1,65 +1,41 @@
-import { useState } from 'react'
+import { toast } from 'react-toastify';
+import { Button } from '@/components/ui/button';
 
 import ProfileFormTemplate from '@/components/templates/ProfileFormTemplate'
-const ProfileFormPage = () => {
-    const [birthDate, setBirthDate] = useState(null);
-    const [formInput, setFormInput] = useState({
-        profile: {
-            fullName: '',
-            education: '',
-            gender: '',
-            relation: '',
-        },
-        job: {
-            income: 0,
-            jobTypeId: 1
-        },
-        residence: {
-            status: '',
-            address: '',
-            description: ''
-        },
+import { useNavigate } from 'react-router-dom';
+import { useFamilyFormStore } from '@/store/form/FamilyFormStore';
+const ProfileFormPage = ({ buttonType, children, formFor = "PARENT" }) => {
+    // const [birthDate, setBirthDate] = useState(JSON.parse(localStorage.getItem('formInput'))?.birthDate || null);
+    const { formInput, onInputChange, selfBirthDate: birthDate, onBirthDateChange } = useFamilyFormStore()
+    const navigate = useNavigate();
 
-        institutionId: 0,
-        nutrition: {
-            height: 0,
-            weight: 0,
-            birth_weight: 0,
-        },
-        behaviour: {
-            eatFrequency: 0,
-            drinkFrequency: 0,
-            physicalActivity: 0,
-            sleepQuality: 0,
-            phbs: 0
-        },
-        knowledgeNutrition: {
-            knowledge: '',
-            score: 0
+    const onSubmitProfileForm = (e, type = "PARENT") => {
+        e.preventDefault();
+        if (type === "PARENT") {
+            handleSubmitParentForm(type);
+        } else {
+            handleSubmitInstitutionForm(type);
         }
-    });
-
-    const onInputChange = (key, value, parentKey = null) => {
-        if (parentKey) {
-            setFormInput(prevValue => ({
-                ...prevValue,
-                [parentKey]: {
-                    ...prevValue[parentKey],
-                    [key]: value
-                }
-            }))
-        }
-
-        setFormInput(prevValue => ({
-            ...prevValue,
-            [key]: value
-        }))
     }
 
-    console.log({ formInput })
+
+    const handleSubmitParentForm = (type = "PARENT") => {
+        const savedPayload = { ...formInput, selfBirthDate: birthDate };
+        console.log({ savedPayload });
+        localStorage.setItem('formInput', JSON.stringify(savedPayload));
+        localStorage.setItem('selfFormPage', true);
+        toast.success(`Data berhasil disimpan`, {
+            autoClose: 1500,
+            onClose: () => {
+                navigate('/dashboard')
+            }
+        })
+    }
 
     return (
-        <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={setBirthDate} />
+        <ProfileFormTemplate onInputChange={onInputChange} residence={formInput.residence} job={formInput.job} nutrition={formInput.nutrition} profile={formInput.profile} birthDate={birthDate} setBirthDate={onBirthDateChange} onSubmit={(e) => onSubmitProfileForm(e, "PARENT")} formFor={formFor} birthWeight={formInput.nutrition.birth_weight} buttonType={buttonType} phoneNumber={formInput.profile.phoneNumber}>
+            {children}
+        </ProfileFormTemplate>
     )
 }
 

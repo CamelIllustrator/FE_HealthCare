@@ -10,7 +10,7 @@ const NutritionForm = ({ onInputChange, height, weight, birth_weight = 0, isChil
                 <FormInputText name={"height"} onChange={({ target }) => onInputChange(target.name, +target.value, 'nutrition')} title={"Tinggi Badan (cm)"} value={height} placeholder={"Masukkan tinggi badan anda"} />
                 <FormInputText name={"weight"} onChange={({ target }) => onInputChange(target.name, +target.value, 'nutrition')} title={"Berat Badan (kg)"} value={weight} placeholder={"Masukkan berat badan anda"} />
                 {isChildren && (
-                    <FormInputText name={"birth_weight"} onChange={({ target }) => onInputChange(target.name, target.value, 'nutrition')} title={"Berat Badan (kg)"} value={birth_weight} placeholder={"Masukkan berat badan anda"} />
+                    <FormInputText name={"birth_weight"} onChange={({ target }) => onInputChange(target.name, +target.value, 'nutrition')} title={"Berat Badan Lahir (kg)"} value={birth_weight} placeholder={"Masukkan berat badan anda"} />
                 )}
 
             </div>

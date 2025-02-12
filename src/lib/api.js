@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import { mapMemberPayload } from "./utils";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -56,4 +58,70 @@ export const decodeJwt = async () => {
     }
   });
   return response.data.data
+}
+
+export const createFamily = async (headFamily) => {
+  const response = await api.put('/families', headFamily, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+
+  const familyId = response.data.data.id;
+  localStorage.setItem('familyId', familyId);
+  return familyId;
+
+}
+
+
+export const addMember = async (familyId, familyData) => {
+  const response = await api.put(`/families/v2/members/${familyId}`, familyData, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+
+  return response.data;
+}
+
+export const addMembersTofamily = async (members) => {
+  try {
+    // const [familyData] = members;
+    // const familyId = await createFamily({
+    //   headFamily: familyData.profile.fullName,
+    //   headPhoneNumber: familyData.profile.phoneNumber
+    // });
+    // console.log({ familyId });
+    // localStorage.setItem('familyId', familyId);
+    const membersPayload = members.map(member => mapMemberPayload(member));
+    const response = await api.post('/families', {
+      members: membersPayload
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
+    return response.data;
+
+  } catch (err) {
+    const message = err.response?.data.message || err.message;
+    console.log(err);
+    toast.error(message);
+  }
+
+}
+
+export const getFamilyMembersByHeadPhone = async (headPhoneNumber) => {
+  try {
+    const response = await api.get(`/families/head/phone/${headPhoneNumber}/members`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+
 }

@@ -12,6 +12,8 @@ import { ParentHomePage } from "./pages/HomePage/Parent/ParentHomePage";
 import FillSelfProfilePage from "./pages/ProfilePage/FillSelfProfilePage";
 import ProfileFormPage from "./pages/ProfilePage/ProfileFormPage";
 import FamilyFormPage from "./pages/ProfilePage/FamilyFormPage";
+import NotFoundPage from "./pages/NotFound/NotFoundPage";
+import QuisionerPage from "./pages/HomePage/Admin/QuisionerPage";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
@@ -28,14 +30,16 @@ function App() {
             <Route path="" element={<ParentHomePage />} />
             <Route path="parent" element={<h1>Test2</h1>} />
             <Route path="parent/profile" element={<FillSelfProfilePage />} />
-            <Route path="parent/profile/create" element={<ProfileFormPage />} />
+            <Route path="parent/profile/create" element={<ProfileFormPage buttonType={"SUBMIT"} />} />
             <Route path="parent/family/create" element={<FamilyFormPage />} />
+            <Route path="admin/quisioner" element={<QuisionerPage />} />
           </Route>
           <Route path="/auth" element={<AuthLayout />}>
             <Route path="login" element={<SignIn />} />
             <Route path="register/parent" element={<SignUpParent />} />
             <Route path="register/institution" element={<SignUpInstitution />} />
           </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       {!accessToken && (

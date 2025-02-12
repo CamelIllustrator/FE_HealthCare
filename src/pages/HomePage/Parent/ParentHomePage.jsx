@@ -1,69 +1,112 @@
 import DashboardProrgess from '@/components/organisms/Progress/DashboardProrgess';
-import React, { useState, useMemo } from 'react';
-import { Calendar } from "@/components/ui/calendar"
+import BasicTable from '@/components/organisms/Table/BasicTable';
+import { Calendar } from "@/components/ui/calendar";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/components/ui/tooltip"
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/tooltip";
+import { getFamilyMembersByHeadPhone } from '@/lib/api';
+import { useFamilyFormStore } from '@/store/form/FamilyFormStore';
+import { userStore } from '@/store/users/userStore';
+import { useState, useEffect } from 'react';
 
 export const ParentHomePage = () => {
+    // const [familyMembers, setFamilyMembers] = useState([
+    //     {
+    //         name: 'Ripan Renaldi',
+    //         relation: 'Ayah',
+    //         job: 'Developer',
+    //         height: 165,
+    //         weight: 55,
+    //         birthWeight: 3,
+    //         nutritionStatus: 'Normal'
+    //     },
+    //     {
+    //         name: 'Ripan Renaldi',
+    //         relation: 'Ayah',
+    //         job: 'Developer',
+    //         height: 165,
+    //         weight: 55,
+    //         birthWeight: 3,
+    //         nutritionStatus: 'Normal'
+    //     },
+    //     {
+    //         name: 'Ripan Renaldi',
+    //         relation: 'Ayah',
+    //         job: 'Developer',
+    //         height: 165,
+    //         weight: 55,
+    //         birthWeight: 3,
+    //         nutritionStatus: 'Normal'
+    //     }
+    // ]);
+    const { formInput, fatherFormInput } = useFamilyFormStore()
+    const { familyMembers } = userStore()
+    const [progressItems, setProgressItems] = useState(() => {
+        const selfFormPageAnswered = [
+            formInput.profile.fullName,
+            formInput.residence.status,
+            formInput.job.jobTypeId,
+            formInput.nutrition.height
+        ].filter(item => item).length
 
-    const progressItems = [
-        {
-            title: 'Data Diri',
-            progress: 100,
-            totalAnswered: 10,
-            totalQuestion: 10,
-            url: 'parent/profile/create'
-        },
-        {
-            title: 'Data Keluarga',
-            progress: 100,
-            totalAnswered: 10,
-            totalQuestion: 10,
-            url: 'parent/family/create'
-        },
-        {
-            title: 'Quisioner Gizi',
-            progress: 100,
-            totalAnswered: 10,
-            totalQuestion: 10,
-            url: ''
-        },
-    ]
+        const familyFormPageAnswered = [
+            localStorage.getItem('selfFormPage'),
+            localStorage.getItem('parentForm'),
+            localStorage.getItem('childrenForm')
+        ].filter(item => item).length
+        return [
+            {
+                title: 'Data Diri',
+                progress: Math.round((selfFormPageAnswered / 4) * 100),
+                totalQuestion: 4,
+                url: 'parent/profile/create',
+                isFilled: localStorage.getItem('selfFormPage') === 'true',
+                totalAnswered: selfFormPageAnswered
+            },
+            {
+                title: 'Data Keluarga',
+                progress: Math.round((familyFormPageAnswered / 3) * 100),
+                totalQuestion: 3,
+                totalAnswered: familyFormPageAnswered,
+                url: 'parent/family/create',
+                isFilled: localStorage.getItem('familyFormPage') === 'true'
+            },
+            {
+                title: 'Quisioner Gizi',
+                progress: 100,
+                totalAnswered: 10,
+                totalQuestion: 10,
+                url: 'parent/quisioner/nutrition',
+                isFilled: localStorage.getItem('nutritionQuisioner') === 'true'
+            },
+        ]
+    })
+
     const [date, setDate] = useState(new Date());
     const [tooltipText, setTooltipText] = useState(null);
     const [monthChange, setMonthChange] = useState(null);
 
-    const specialDays = [
-        {
-            date: new Date(2025, 3, 14),
-            name: "Valentine's Day",
-        },
-        {
-            date: new Date(2025, 1, 14),
-            name: "Valentine's Day3",
-        },
-        {
-            date: new Date(2025, 2, 14),
-            name: "Valentine's Day2",
-        },
-        {
-            date: new Date(2025, 1, 17),
-            name: "Makan siang bersama",
-        },
-    ];
+    // const specialDays = [
+    //     {
+    //         date: new Date(2025, 3, 14),
+    //         name: "Valentine's Day",
+    //     },
+    //     {
+    //         date: new Date(2025, 1, 14),
+    //         name: "Valentine's Day3",
+    //     },
+    //     {
+    //         date: new Date(2025, 2, 14),
+    //         name: "Valentine's Day2",
+    //     },
+    //     {
+    //         date: new Date(2025, 1, 17),
+    //         name: "Makan siang bersama",
+    //     },
+    // ];
 
     const handleDayHover = (day) => {
         const specialDay = specialDays.find(
@@ -79,10 +122,33 @@ export const ParentHomePage = () => {
         }
     };
 
-    const handleMonthChange = (test) => {
-        setTooltipText(null);
+    const format = {
+        headers: [
+            { alias: "Nama Lengkap", name: "full_name" },
+            { alias: "Relasi", name: "relation" },
+            { alias: "Pekerjaan", name: "job.job_type.name" },
+            { alias: "Tinggi Badan (cm)", name: "nutrition[0].height" },
+            { alias: "Berat Badan (kg)", name: "nutrition[0].weight" },
+            { alias: "Berat Badan Lahir (kg)", name: "nutrition[0].birth_weight" },
+            { alias: "Status Gizi", name: "nutrition[0].nutrition_status.status" },
+        ]
     }
 
+    useEffect(() => {
+        async function fetchFamilyMembersData() {
+            if (formInput.profile.relation === 'AYAH') {
+                const { data } = await getFamilyMembersByHeadPhone(formInput.profile.phoneNumber)
+                userStore.setState({ familyMembers: data });
+                return;
+            }
+            const { data } = await getFamilyMembersByHeadPhone(fatherFormInput.profile.phoneNumber);
+            userStore.setState({ familyMembers: data });
+            return;
+        }
+
+        fetchFamilyMembersData();
+    }, [])
+    console.log({ familyMembers });
 
     return (
         <article className="w-full">
@@ -102,12 +168,12 @@ export const ParentHomePage = () => {
                                         onMonthChange={() => {
                                             setMonthChange(true);
                                         }}
-                                        modifiers={{
-                                            special: specialDays.map((day) => day.date),
-                                        }}
-                                        modifiersClassNames={{
-                                            special: "bg-red-500 text-white rounded-full",
-                                        }}
+                                    // modifiers={{
+                                    //     special: specialDays.map((day) => day.date),
+                                    // }}
+                                    // modifiersClassNames={{
+                                    //     special: "bg-red-500 text-white rounded-full",
+                                    // }}
                                     />
                                     {tooltipText && monthChange && (
                                         <TooltipContent className="bg-black text-white p-2 rounded-md text-sm">
@@ -119,62 +185,7 @@ export const ParentHomePage = () => {
                         </TooltipProvider>
                     </div>
                 </div>
-                <div className="w-full bg-white mt-6 rounded-xl p-4">
-                    <h1>Tabel Keluarga</h1>
-                    <Table>
-                        <TableCaption>Informasi Keluarga</TableCaption>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-[100px]">Nama</TableHead>
-                                <TableHead className="w-[100px]">Relasi</TableHead>
-                                <TableHead>Pekerjaan</TableHead>
-                                <TableHead>Tinggi Badan (cm)</TableHead>
-                                <TableHead>Berat Badan (kg)</TableHead>
-                                <TableHead>Berat Badan Lahir (kg)</TableHead>
-                                <TableHead>Status Gizi</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell className="font-medium">Ripan Renaldi</TableCell>
-                                <TableCell>Ayah</TableCell>
-                                <TableCell>Developer</TableCell>
-                                <TableCell>165</TableCell>
-                                <TableCell>55</TableCell>
-                                <TableCell>3</TableCell>
-                                <TableCell>Normal</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className="font-medium">Ripan Renaldi</TableCell>
-                                <TableCell>Ayah</TableCell>
-                                <TableCell>Developer</TableCell>
-                                <TableCell>165</TableCell>
-                                <TableCell>55</TableCell>
-                                <TableCell>3</TableCell>
-                                <TableCell>Normal</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className="font-medium">Ripan Renaldi</TableCell>
-                                <TableCell>Ayah</TableCell>
-                                <TableCell>Developer</TableCell>
-                                <TableCell>165</TableCell>
-                                <TableCell>55</TableCell>
-                                <TableCell>3</TableCell>
-                                <TableCell>Normal</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className="font-medium">Ripan Renaldi</TableCell>
-                                <TableCell>Ayah</TableCell>
-                                <TableCell>Developer</TableCell>
-                                <TableCell>165</TableCell>
-                                <TableCell>55</TableCell>
-                                <TableCell>3</TableCell>
-                                <TableCell>Normal</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-
-                </div>
+                <BasicTable caption={'Informasi Keluarga'} data={familyMembers.length > 0 ? familyMembers : []} format={format} title={'Tabel Keluarga'} />
             </section>
         </article>
     )
