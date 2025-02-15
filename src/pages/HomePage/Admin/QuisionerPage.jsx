@@ -82,7 +82,6 @@ const QuisionerPage = () => {
         }
         fetchUserData();
     }, [])
-    console.log({ users });
     return (
         <section className="flex flex-col gap-4">
             <header className="bg-white p-4 rounded-xl">

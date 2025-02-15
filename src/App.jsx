@@ -1,19 +1,19 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import HomeLayout from "./layouts/HomeLayout";
-import AuthLayout from "./layouts/AuthLayout";
-import SignIn from "./pages/Auth/SignIn";
-import SignUpParent from "./pages/Auth/SignUpParent";
-import SignUpInstitution from "./pages/Auth/SignUpInstitution";
-import { LandingPage } from "./pages/Landing Page/LandingPage";
-import Header from './components/organisms/Header';
+import { Route, Routes } from "react-router-dom";
 import Footer from "./components/organisms/Footer";
+import Header from './components/organisms/Header';
+import AuthLayout from "./layouts/AuthLayout";
+import HomeLayout from "./layouts/HomeLayout";
+import SignIn from "./pages/Auth/SignIn";
+import SignUpInstitution from "./pages/Auth/SignUpInstitution";
+import SignUpParent from "./pages/Auth/SignUpParent";
+import QuisionerPage from "./pages/HomePage/Admin/QuisionerPage";
 import { ParentHomePage } from "./pages/HomePage/Parent/ParentHomePage";
+import { LandingPage } from "./pages/Landing Page/LandingPage";
+import NotFoundPage from "./pages/NotFound/NotFoundPage";
+import FamilyFormPage from "./pages/ProfilePage/FamilyFormPage";
 import FillSelfProfilePage from "./pages/ProfilePage/FillSelfProfilePage";
 import ProfileFormPage from "./pages/ProfilePage/ProfileFormPage";
-import FamilyFormPage from "./pages/ProfilePage/FamilyFormPage";
-import NotFoundPage from "./pages/NotFound/NotFoundPage";
-import QuisionerPage from "./pages/HomePage/Admin/QuisionerPage";
+import CreateNutritionPage from "./pages/Quisioner/CreateNutritionPage";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
@@ -34,6 +34,7 @@ function App() {
             <Route path="parent/family/create" element={<FamilyFormPage />} />
             <Route path="admin" element={<QuisionerPage />} />
             <Route path="admin/quisioner" element={<QuisionerPage />} />
+            <Route path="admin/quisioner/create/nutrition" element={<CreateNutritionPage />} />
           </Route>
           <Route path="/auth" element={<AuthLayout />}>
             <Route path="login" element={<SignIn />} />

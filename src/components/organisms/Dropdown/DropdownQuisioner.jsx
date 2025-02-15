@@ -1,14 +1,14 @@
 import {
-    MessageSquare,
     Plus,
     UserPlus
 } from "lucide-react";
 import { AiFillEnvironment } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
-import { MdCastForEducation } from "react-icons/md";
+import { MdCastForEducation, MdOutlineHealthAndSafety } from "react-icons/md";
 import { RiHealthBookFill } from "react-icons/ri";
-import { MdOutlineHealthAndSafety } from "react-icons/md";
-
+import { Link } from 'react-router-dom';
+import { IoMdNutrition } from "react-icons/io";
+import { FiActivity } from "react-icons/fi";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +24,7 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+
 
 export function DropdownQuisioner() {
     return (
@@ -48,37 +49,61 @@ export function DropdownQuisioner() {
                             <DropdownMenuSubContent>
                                 <DropdownMenuItem>
                                     <MdCastForEducation />
-                                    <span>Pelaksanaan Pendidikan Kesehatan</span>
+                                    <Link to={"quisioner/create/health-education"} asChild>
+                                        Pelaksanaan Pendidikan Kesehatan
+                                    </Link>
+                                    <span></span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <RiHealthBookFill />
-                                    <span>Pelaksanaan Pelayanan Kesehatan</span>
+                                    <Link to={"quisioner/create/health-service"} asChild>
+                                        Pelaksanaan Pelayanan Kesehatan
+                                    </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <AiFillEnvironment />
-                                    <span>Lingkungan Sekolah Sehat</span>
+                                    <Link to={"quisioner/create/school-environment"} asChild>
+                                        Lingkungan Sekolah Sehat
+                                    </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <MdOutlineHealthAndSafety />
-                                    <span>Manajemen UKS</span>
+                                    <Link to={"quisioner/create/uks-management"} asChild>
+                                        Manajemen UKS
+                                    </Link>
                                 </DropdownMenuItem>
-                                {/* <DropdownMenuSeparator /> */}
-                                {/* <DropdownMenuItem>
-                                    <PlusCircle />
-                                    <span>More...</span>
-                                </DropdownMenuItem> */}
                             </DropdownMenuSubContent>
                         </DropdownMenuPortal>
                     </DropdownMenuSub>
-                    <DropdownMenuItem>
-                        <Plus />
-                        <span>Orang Tua</span>
-                    </DropdownMenuItem>
+                    <DropdownMenuSub>
+                        <DropdownMenuSubTrigger>
+                            <Plus />
+                            <span>Orang Tua</span>
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                                <DropdownMenuItem>
+                                    <IoMdNutrition />
+                                    <Link to={"quisioner/create/nutrition"} asChild>
+                                        Pengetahuan Tentang Gizi
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <FiActivity />
+                                    <Link to={"quisioner/create/behaviour"} asChild>
+                                        Perilaku Anak
+                                    </Link>
+                                </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                    </DropdownMenuSub>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                    <h1>Buat</h1>
-                </DropdownMenuItem>
+                {/* <DropdownMenuItem>
+                    <Link to={"quisioner/create"}>
+                        <h1>Buat Quisioner</h1>
+                    </Link>
+                </DropdownMenuItem> */}
 
             </DropdownMenuContent>
         </DropdownMenu>
