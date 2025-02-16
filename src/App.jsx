@@ -13,7 +13,8 @@ import NotFoundPage from "./pages/NotFound/NotFoundPage";
 import FamilyFormPage from "./pages/ProfilePage/FamilyFormPage";
 import FillSelfProfilePage from "./pages/ProfilePage/FillSelfProfilePage";
 import ProfileFormPage from "./pages/ProfilePage/ProfileFormPage";
-import CreateNutritionPage from "./pages/Quisioner/CreateNutritionPage";
+import { CreateParentQuisionerPage } from "./pages/Quisioner/CreateParentQuisionerPage";
+import { CreateSchoolQuisionerPage } from "./pages/Quisioner/CreateSchoolQuisionerPage";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
@@ -34,7 +35,8 @@ function App() {
             <Route path="parent/family/create" element={<FamilyFormPage />} />
             <Route path="admin" element={<QuisionerPage />} />
             <Route path="admin/quisioner" element={<QuisionerPage />} />
-            <Route path="admin/quisioner/create/nutrition" element={<CreateNutritionPage />} />
+            <Route path="admin/quisioner/create/parents" element={<CreateParentQuisionerPage />} />
+            <Route path="admin/quisioner/create/schools/:stratification" element={<CreateSchoolQuisionerPage />} />
           </Route>
           <Route path="/auth" element={<AuthLayout />}>
             <Route path="login" element={<SignIn />} />

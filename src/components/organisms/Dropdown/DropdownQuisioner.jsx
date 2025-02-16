@@ -47,31 +47,132 @@ export function DropdownQuisioner() {
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
                             <DropdownMenuSubContent>
-                                <DropdownMenuItem>
-                                    <MdCastForEducation />
-                                    <Link to={"quisioner/create/health-education"} asChild>
-                                        Pelaksanaan Pendidikan Kesehatan
-                                    </Link>
-                                    <span></span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <RiHealthBookFill />
-                                    <Link to={"quisioner/create/health-service"} asChild>
-                                        Pelaksanaan Pelayanan Kesehatan
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <AiFillEnvironment />
-                                    <Link to={"quisioner/create/school-environment"} asChild>
-                                        Lingkungan Sekolah Sehat
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <MdOutlineHealthAndSafety />
-                                    <Link to={"quisioner/create/uks-management"} asChild>
-                                        Manajemen UKS
-                                    </Link>
-                                </DropdownMenuItem>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger>
+                                        <MdCastForEducation />
+                                        <h1>Pelaksanaan Pendidikan Kesehatan</h1>
+                                    </DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/HEALTH_EDUCATION?s=MINIMAL"} asChild>
+                                                    Minimal
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/HEALTH_EDUCATION?s=STANDAR"} asChild>
+                                                    Standar
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/HEALTH_EDUCATION?s=OPTIMAL"} asChild>
+                                                    Optimal
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/HEALTH_EDUCATION?s=PARIPURNA"} asChild>
+                                                    Paripurna
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger>
+                                        <RiHealthBookFill />
+                                        <h1>
+                                            Pelaksanaan Pelayanan Kesehatan
+                                        </h1>
+                                    </DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/HEALTH_SERVICE?s=MINIMAL"} asChild>
+                                                    Minimal
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/HEALTH_SERVICE?s=STANDAR"} asChild>
+                                                    Standar
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/HEALTH_SERVICE?s=OPTIMAL"} asChild>
+                                                    Optimal
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/HEALTH_SERVICE?s=PARIPURNA"} asChild>
+                                                    Paripurna
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger>
+                                        <AiFillEnvironment />
+                                        <h1>
+                                            Lingkungan Sekolah Sehat
+                                        </h1>
+                                    </DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/SCHOOL_ENVIRONMENT?s=MINIMAL"} asChild>
+                                                    Minimal
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/SCHOOL_ENVIRONMENT?s=STANDAR"} asChild>
+                                                    Standar
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/SCHOOL_ENVIRONMENT?s=OPTIMAL"} asChild>
+                                                    Optimal
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/SCHOOL_ENVIRONMENT?s=PARIPURNA"} asChild>
+                                                    Paripurna
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger>
+                                        <MdOutlineHealthAndSafety />
+                                        <h1>
+                                            Manajemen UKS
+                                        </h1>
+                                    </DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/UKS_MANAGEMENT?s=MINIMAL"} asChild>
+                                                    Minimal
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/UKS_MANAGEMENT?s=STANDAR"} asChild>
+                                                    Standar
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/UKS_MANAGEMENT?s=OPTIMAL"} asChild>
+                                                    Optimal
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={"quisioner/create/schools/UKS_MANAGEMENT?s=PARIPURNA"} asChild>
+                                                    Paripurna
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
                             </DropdownMenuSubContent>
                         </DropdownMenuPortal>
                     </DropdownMenuSub>
@@ -84,13 +185,13 @@ export function DropdownQuisioner() {
                             <DropdownMenuSubContent>
                                 <DropdownMenuItem>
                                     <IoMdNutrition />
-                                    <Link to={"quisioner/create/nutrition"} asChild>
+                                    <Link to={"quisioner/create/parents"} asChild>
                                         Pengetahuan Tentang Gizi
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <FiActivity />
-                                    <Link to={"quisioner/create/behaviour"} asChild>
+                                    <Link to={"quisioner/create/parents"} asChild>
                                         Perilaku Anak
                                     </Link>
                                 </DropdownMenuItem>

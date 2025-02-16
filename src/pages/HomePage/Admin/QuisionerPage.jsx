@@ -1,4 +1,3 @@
-import BasicCard from '@/components/organisms/Card/BasicCard/BasicCard'
 import BasicCardList from '@/components/organisms/Card/BasicCard/BasicCardList'
 import { MultipleLineCart } from '@/components/organisms/Cart/MultipleLineCart';
 import { DropdownQuisioner } from '@/components/organisms/Dropdown/DropdownQuisioner'

@@ -134,7 +134,7 @@ export const getRegisterStatistic = async () => {
     });
     return response.data
   } catch (err) {
-    toast.error(err.response?.data.message)
+    toast.error(err.response?.data.message || err.message)
   }
 }
 
@@ -147,6 +147,19 @@ export const getUsers = async () => {
     });
     return response.data;
   } catch (err) {
-    toast.error(err.response?.data.message);
+    toast.error(err.response?.data.message || err.message);
+  }
+}
+
+export const createQuisioner = async (values) => {
+  try {
+    const response = await api.post('/quisioners', values, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
   }
 }

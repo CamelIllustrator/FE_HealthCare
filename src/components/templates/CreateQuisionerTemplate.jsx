@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
@@ -6,23 +7,30 @@ import {
     FormMessage
 } from "@/components/ui/form";
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Plus } from "lucide-react";
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import Question from '../organisms/Quisioner/Question';
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Question } from '../organisms/Quisioner/Question';
+
 
 const quisionerSchema = z.object({
     title: z.string().min(2, { message: "Title must be at least 2 characters" }),
     questions: z.array(
         z.object({
-            question: z.string().min(1, { message: "Question is required" }),
-            type: z.enum(["BOOLEAN", "text", "MULTIPLE_CHOICE"]),
+            question: z.string().min(2, { message: "Question is required" }),
+            type: z.enum(["BOOLEAN", "SCALE", "MULTIPLE_CHOICE"]),
+            isRequired: z.boolean(),
+            options: z.array(z.object({
+                title: z.string().min(1, { message: "Option title is required" }),
+                score: z.number().min(0, {
+                    message: "Score must be greater than or equal to 0"
+                })
+            })).optional().default([])
         })
     )
 });
 
-export const CreateQuisionerTemplate = () => {
+export const CreateQuisionerTemplate = ({ forWho = "", onSubmitHandler = () => { } }) => {
     const form = useForm({
         defaultValues: {
             title: '',
@@ -37,22 +45,23 @@ export const CreateQuisionerTemplate = () => {
         name: "questions"
     });
 
-    const onSubmitHandler = (values) => {
-        console.log({ values });
-    };
-
     return (
         <section className="relative flex flex-col gap-4">
             <header className="bg-white p-4 rounded-xl sticky top-0 z-10 flex justify-between items-center">
                 <h1>Create Quisioner Page</h1>
-                <Button onClick={() => append({ question: "", type: "BOOLEAN" })} type="button">
+                <Button onClick={() => append({
+                    question: "", type: "BOOLEAN", isRequired: true, options: [{
+                        title: "",
+                        score: 0
+                    }]
+                })} type="button">
                     <Plus />
                     <span>Tambah Pertanyaan</span>
                 </Button>
             </header>
 
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmitHandler)} className="bg-white p-4 rounded-xl flex flex-col gap-2">
+                <form onSubmit={form.handleSubmit(onSubmitHandler)} className="bg-white p-4 rounded-xl flex flex-col gap-4">
                     <FormField
                         name="title"
                         control={form.control}
@@ -78,14 +87,15 @@ export const CreateQuisionerTemplate = () => {
                                 name={`questions.${index}.question`}
                                 control={form.control}
                                 render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <Question {...field} index={index} />
-                                        </FormControl>
-                                        <Button type="button" onClick={() => remove(index)} className="mt-2">
-                                            Hapus Pertanyaan
-                                        </Button>
-                                    </FormItem>
+                                    <Question
+                                        index={index}
+                                        question={field.value}
+                                        isRequired={form.watch(`questions.${index}.isRequired`)}
+                                        onChange={form.setValue}
+                                        selectValue={form.watch(`questions.${index}.type`)}
+                                        control={form.control}
+                                        onRemove={remove}
+                                    />
                                 )}
                             />
                         )
