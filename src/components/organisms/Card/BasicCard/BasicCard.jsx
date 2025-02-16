@@ -7,7 +7,7 @@ const BasicCard = ({ title = "Information", totalDone = null, totalAll = null, d
         <div className="bg-gradient-to-r from-admprimary to-admsecondary text-white p-4 rounded-xl max-w-1/3">
             <h1 className="font-semibold text-lg">{title}</h1>
             <div className="flex gap-2 items-end">
-                {totalAll && totalDone ? (
+                {totalAll !== null && totalDone !== null ? (
                     <h1>{totalDone} | {totalAll}</h1>
                 ) : (
                     <h1>{totalAll}</h1>

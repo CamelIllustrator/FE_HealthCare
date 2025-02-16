@@ -163,3 +163,29 @@ export const createQuisioner = async (values) => {
     toast.error(err.response?.data.message || err.message);
   }
 }
+
+export const getAllQuisioners = async (forWho = "") => {
+  try {
+    const response = await api.get(`/quisioners?forWho=${forWho}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+}
+
+export const getAllResponses = async (forWho = "") => {
+  try {
+    const response = await api.get(`/quisioners/answers/all?forWho=${forWho}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+}
