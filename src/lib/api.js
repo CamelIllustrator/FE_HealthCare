@@ -123,5 +123,96 @@ export const getFamilyMembersByHeadPhone = async (headPhoneNumber) => {
   } catch (err) {
     toast.error(err.response?.data.message || err.message);
   }
+}
 
+export const getRegisterStatistic = async () => {
+  try {
+    const response = await api.get('/users/statistics/register', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message)
+  }
+}
+
+export const getUsers = async () => {
+  try {
+    const response = await api.get('/users', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+}
+
+export const createQuisioner = async (values) => {
+  try {
+    const response = await api.post('/quisioners', values, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+}
+
+export const getAllQuisioners = async (forWho = "") => {
+  try {
+    const response = await api.get(`/quisioners?forWho=${forWho}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+}
+
+export const getAllResponses = async (forWho = "") => {
+  try {
+    const response = await api.get(`/quisioners/answers/all?forWho=${forWho}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+}
+
+export const getParentQuisioners = async () => {
+  try {
+    const response = await api.get('/quisioners/parents/all', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+
+}
+
+export const getQuisionerById = async (quisionerId) => {
+  try {
+    const response = await api.get(`/quisioners/${quisionerId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
 }

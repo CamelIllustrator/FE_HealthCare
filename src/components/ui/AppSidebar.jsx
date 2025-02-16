@@ -14,7 +14,6 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { Link } from "react-router-dom"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChevronUp } from "lucide-react"
-import { getInitials } from "@/lib/utils"
 
 
 export function AppSidebar({ items }) {

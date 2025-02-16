@@ -9,7 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-const BasicTable = ({ title, caption, format, data }) => {
+const BasicTable = ({ title = "", caption = "", format = {}, data = [], children }) => {
     return (
         <div className="w-full bg-white mt-6 rounded-xl p-4">
             <h1 className="mb-2">{title}</h1>
@@ -23,7 +23,7 @@ const BasicTable = ({ title, caption, format, data }) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {
+                    {children ? children : (
                         data.length ? data.map((row, index) => (
                             <TableRow key={index}>
                                 <TableCell>{row.full_name}</TableCell>
@@ -35,13 +35,13 @@ const BasicTable = ({ title, caption, format, data }) => {
                                 <TableCell>{row.nutrition[0].birth_weight ?? "Tidak ada data"}</TableCell>
                                 <TableCell>{row.nutrition[0].nutrition_status.status}</TableCell>
                             </TableRow>
-
                         ))
                             : (
                                 <TableRow>
-                                    <TableCell colSpan={format.headers.length ?? 5} className="text-center mt-8 font-semibold ">Tidak Ada Data, Isi data keluarga terlebih dahulu</TableCell>
+                                    <TableCell colSpan={format.headers.length ?? 5} className="text-center mt-8 font-semibold ">Tidak Ada Data, Isi {title} terlebih dahulu</TableCell>
                                 </TableRow>
-                            )}
+                            )
+                    )}
                 </TableBody>
             </Table>
 
