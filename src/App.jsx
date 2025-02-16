@@ -15,6 +15,7 @@ import FillSelfProfilePage from "./pages/ProfilePage/FillSelfProfilePage";
 import ProfileFormPage from "./pages/ProfilePage/ProfileFormPage";
 import { CreateParentQuisionerPage } from "./pages/Quisioner/CreateParentQuisionerPage";
 import { CreateSchoolQuisionerPage } from "./pages/Quisioner/CreateSchoolQuisionerPage";
+import FillParentQuisionerPage from "./pages/Quisioner/FillParentQuisionerPage";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
@@ -33,6 +34,8 @@ function App() {
             <Route path="parent/profile" element={<FillSelfProfilePage />} />
             <Route path="parent/profile/create" element={<ProfileFormPage buttonType={"SUBMIT"} />} />
             <Route path="parent/family/create" element={<FamilyFormPage />} />
+            <Route path="parent/quisioner/create/:quisionerId" element={<FillParentQuisionerPage />} />
+
             <Route path="admin" element={<QuisionerPage />} />
             <Route path="admin/quisioner" element={<QuisionerPage />} />
             <Route path="admin/quisioner/create/parents" element={<CreateParentQuisionerPage />} />

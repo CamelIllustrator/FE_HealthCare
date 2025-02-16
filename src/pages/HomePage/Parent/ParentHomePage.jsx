@@ -7,7 +7,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { getFamilyMembersByHeadPhone } from '@/lib/api';
+import { getFamilyMembersByHeadPhone, getParentQuisioners } from '@/lib/api';
 import { useFamilyFormStore } from '@/store/form/FamilyFormStore';
 import { userStore } from '@/store/users/userStore';
 import { useState, useEffect } from 'react';
@@ -73,21 +73,14 @@ export const ParentHomePage = () => {
                 totalAnswered: familyFormPageAnswered,
                 url: 'parent/family/create',
                 isFilled: localStorage.getItem('familyFormPage') === 'true'
-            },
-            {
-                title: 'Quisioner Gizi',
-                progress: 100,
-                totalAnswered: 10,
-                totalQuestion: 10,
-                url: 'parent/quisioner/nutrition',
-                isFilled: localStorage.getItem('nutritionQuisioner') === 'true'
-            },
+            }
         ]
     })
 
     const [date, setDate] = useState(new Date());
     const [tooltipText, setTooltipText] = useState(null);
     const [monthChange, setMonthChange] = useState(null);
+    const [parentQuisioner, setParentQuisioner] = useState([]);
 
     // const specialDays = [
     //     {
@@ -122,6 +115,7 @@ export const ParentHomePage = () => {
         }
     };
 
+
     const format = {
         headers: [
             { alias: "Nama Lengkap", name: "full_name" },
@@ -146,9 +140,28 @@ export const ParentHomePage = () => {
             return;
         }
 
+        async function fetchParentQuisioner() {
+            const { data } = await getParentQuisioners();
+            setParentQuisioner(data);
+        }
+        fetchParentQuisioner();
+
         fetchFamilyMembersData();
     }, [])
-    console.log({ familyMembers });
+    console.log({ parentQuisioner })
+
+    useEffect(() => {
+        if (progressItems.length === 2) {
+            setProgressItems(prevState => [...prevState, ...parentQuisioner.map(item => ({
+                title: item.title,
+                progress: 0,
+                totalQuestion: item.questions.length ?? 0,
+                totalAnswered: 0,
+                url: `parent/quisioner/create/${item.id}`,
+                isFilled: false
+            }))])
+        }
+    }, [parentQuisioner])
 
     return (
         <article className="w-full">

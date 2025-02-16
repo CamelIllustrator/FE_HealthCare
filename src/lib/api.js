@@ -189,3 +189,30 @@ export const getAllResponses = async (forWho = "") => {
     toast.error(err.response?.data.message || err.message);
   }
 }
+
+export const getParentQuisioners = async () => {
+  try {
+    const response = await api.get('/quisioners/parents/all', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+
+}
+
+export const getQuisionerById = async (quisionerId) => {
+  try {
+    const response = await api.get(`/quisioners/${quisionerId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+}
