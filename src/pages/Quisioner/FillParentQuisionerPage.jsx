@@ -1,8 +1,8 @@
-import FillBooleanQuestion from '@/components/organisms/Quisioner/FillBooleanQuestion';
+import FillQuestion from '@/components/organisms/Quisioner/FillBooleanQuestion';
 import { Button } from '@/components/ui/button';
 import { getQuisionerById } from '@/lib/api';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const FillParentQuisionerPage = () => {
     const { quisionerId } = useParams();
@@ -16,6 +16,8 @@ const FillParentQuisionerPage = () => {
         }
         fetchQuisioners();
     }, [])
+
+    console.log({ answers })
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -36,9 +38,8 @@ const FillParentQuisionerPage = () => {
     return (
         <section>
             <div className="bg-white p-4 rounded-lg flex flex-col gap-5">
-                <FillBooleanQuestion questions={quisioners.questions} onAnswerChange={onAnswerChange} />
+                <FillQuestion questions={quisioners.questions} onAnswerChange={onAnswerChange} setAnswers={setAnswers} />
                 <Button type="button" onClick={onSubmit}>Submit</Button>
-
             </div>
         </section>
     )
