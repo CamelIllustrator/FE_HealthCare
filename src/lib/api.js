@@ -15,7 +15,7 @@ export const login = async (credentials) => {
       import.meta.env.VITE_API_LOGIN,
       credentials
     );
-    localStorage.setItem('accessToken', response.data.data.accessToken);
+    localStorage.setItem("accessToken", response.data.data.accessToken);
     return response.data;
   } catch (error) {
     throw error.response?.data;
@@ -51,38 +51,44 @@ export const registerInstitution = async (userData) => {
 export default api;
 
 export const decodeJwt = async () => {
-  const accessToken = localStorage.getItem('accessToken');
-  const response = await api.post('/auth/jwt/decode', {}, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`
+  const accessToken = localStorage.getItem("accessToken");
+  const response = await api.post(
+    "/auth/jwt/decode",
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
-  });
-  return response.data.data
-}
+  );
+  return response.data.data;
+};
 
 export const createFamily = async (headFamily) => {
-  const response = await api.put('/families', headFamily, {
+  const response = await api.put("/families", headFamily, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    }
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
   });
 
   const familyId = response.data.data.id;
-  localStorage.setItem('familyId', familyId);
+  localStorage.setItem("familyId", familyId);
   return familyId;
-
-}
-
+};
 
 export const addMember = async (familyId, familyData) => {
-  const response = await api.put(`/families/v2/members/${familyId}`, familyData, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+  const response = await api.put(
+    `/families/v2/members/${familyId}`,
+    familyData,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     }
-  });
+  );
 
   return response.data;
-}
+};
 
 export const addMembersTofamily = async (members) => {
   try {
@@ -93,126 +99,178 @@ export const addMembersTofamily = async (members) => {
     // });
     // console.log({ familyId });
     // localStorage.setItem('familyId', familyId);
-    const membersPayload = members.map(member => mapMemberPayload(member));
-    const response = await api.post('/families', {
-      members: membersPayload
-    }, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    const membersPayload = members.map((member) => mapMemberPayload(member));
+    const response = await api.post(
+      "/families",
+      {
+        members: membersPayload,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
       }
-    })
+    );
     return response.data;
-
   } catch (err) {
     const message = err.response?.data.message || err.message;
     console.log(err);
     toast.error(message);
   }
-
-}
+};
 
 export const getFamilyMembersByHeadPhone = async (headPhoneNumber) => {
   try {
-    const response = await api.get(`/families/head/phone/${headPhoneNumber}/members`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    const response = await api.get(
+      `/families/head/phone/${headPhoneNumber}/members`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
       }
-    });
+    );
 
     return response.data;
   } catch (err) {
     toast.error(err.response?.data.message || err.message);
   }
-}
+};
 
 export const getRegisterStatistic = async () => {
   try {
-    const response = await api.get('/users/statistics/register', {
+    const response = await api.get("/users/statistics/register", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     });
-    return response.data
+    return response.data;
   } catch (err) {
-    toast.error(err.response?.data.message || err.message)
+    toast.error(err.response?.data.message || err.message);
   }
-}
+};
 
 export const getUsers = async () => {
   try {
-    const response = await api.get('/users', {
+    const response = await api.get("/users", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     });
     return response.data;
   } catch (err) {
     toast.error(err.response?.data.message || err.message);
   }
-}
+};
 
 export const createQuisioner = async (values) => {
   try {
-    const response = await api.post('/quisioners', values, {
+    const response = await api.post("/quisioners", values, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     });
     return response.data;
   } catch (err) {
     toast.error(err.response?.data.message || err.message);
   }
-}
+};
 
 export const getAllQuisioners = async (forWho = "") => {
   try {
     const response = await api.get(`/quisioners?forWho=${forWho}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    })
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
     return response.data;
   } catch (err) {
     toast.error(err.response?.data.message || err.message);
   }
-}
+};
 
 export const getAllResponses = async (forWho = "") => {
   try {
     const response = await api.get(`/quisioners/answers/all?forWho=${forWho}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    })
-    return response.data;
-  } catch (err) {
-    toast.error(err.response?.data.message || err.message);
-  }
-}
-
-export const getParentQuisioners = async () => {
-  try {
-    const response = await api.get('/quisioners/parents/all', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     });
     return response.data;
   } catch (err) {
     toast.error(err.response?.data.message || err.message);
   }
+};
 
-}
+export const getParentQuisioners = async () => {
+  try {
+    const response = await api.get("/quisioners/parents/all", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+};
 
 export const getQuisionerById = async (quisionerId) => {
   try {
     const response = await api.get(`/quisioners/${quisionerId}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     });
     return response.data;
   } catch (err) {
     toast.error(err.response?.data.message || err.message);
   }
-}
+};
+
+export const responseQuisioner = async (quisionerId, payload) => {
+  try {
+    const response = await api.post(
+      `quisioners/${quisionerId}/responses`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+};
+
+export const getQuisionerBelongTofamilyMember = async (familyMemberId) => {
+  try {
+    const response = await api.get(
+      `/quisioners/responses/families/${familyMemberId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+};
+
+export const getSchools = async () => {
+  try {
+    const response = await api.get("/institutions/schools", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    console.log({ response: response.data });
+    return response.data;
+  } catch (err) {
+    toast.error(err.response?.data.message || err.message);
+  }
+};
